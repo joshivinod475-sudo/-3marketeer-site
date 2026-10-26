@@ -1,129 +1,414 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Vinod Lead Manager</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one working column. Pipeline strip, add form, filters, lead rows. */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --sunk: #eef1f4;
+  --fg: #1c2530;
+  --muted: #5f6b78;
+  --line: #dde3e9;
+  --accent: #1f6feb;
+  --accent-fg: #ffffff;
+  --danger: #c43c3c;
+  --warn: #b26a00;
+  --s-new: #6b7785; --s-contacted: #1f6feb; --s-replied: #7a4fd6;
+  --s-meeting: #b26a00; --s-won: #1d8a4e; --s-lost: #9aa3ad;
+  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12171d; --surface: #1b222a; --sunk: #161c23; --fg: #e6ebf0; --muted: #94a1ae;
+    --line: #2c3540; --accent: #5b9bff; --accent-fg: #0d1218; --danger: #f07a7a; --warn: #f0b04a;
+    --s-new: #94a1ae; --s-contacted: #5b9bff; --s-replied: #a98bf0;
+    --s-meeting: #f0b04a; --s-won: #4fc485; --s-lost: #6b7580;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12171d; --surface: #1b222a; --sunk: #161c23; --fg: #e6ebf0; --muted: #94a1ae;
+  --line: #2c3540; --accent: #5b9bff; --accent-fg: #0d1218; --danger: #f07a7a; --warn: #f0b04a;
+  --s-new: #94a1ae; --s-contacted: #5b9bff; --s-replied: #a98bf0;
+  --s-meeting: #f0b04a; --s-won: #4fc485; --s-lost: #6b7580;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.45;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 32px 48px;
+}
+.wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
+header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
+h1 { font-family: var(--display); font-size: 30px; margin: 0; line-height: 1.1; text-wrap: balance; }
+.sub { color: var(--muted); margin: 4px 0 0; }
+.tools { display: flex; gap: 8px; flex-wrap: wrap; }
+button, .btn { font: inherit; font-size: 14px; cursor: pointer; border-radius: 6px; }
+.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line); padding: 8px 12px; }
+.ghost:hover { border-color: var(--muted); }
+.primary { background: var(--accent); color: var(--accent-fg); border: 0; padding: 10px 18px; font-weight: 600; }
+button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
 
-  <head>
-  <title>Lead Manager</title>
+/* Pipeline strip */
+.pipe { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.pipe button { background: var(--surface); border: 0; border-radius: 0; padding: 10px 10px 12px; text-align: left; display: flex; flex-direction: column; gap: 2px; color: var(--fg); border-top: 3px solid transparent; }
+.pipe button[aria-pressed="true"] { background: var(--sunk); border-top-color: var(--c, var(--accent)); }
+.pipe .n { font-family: var(--mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.pipe .l { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.pipe .due .n { color: var(--warn); }
+@media (max-width: 720px) { .pipe { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
-  <style>
-    body {
-      font-family: Arial;
-    }
+/* Form */
+form { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
+.f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.f label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
+.c2 { grid-column: span 2; } .c3 { grid-column: span 3; } .c6 { grid-column: span 6; }
+input, select, textarea { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 9px 10px; min-width: 0; width: 100%; }
+textarea { resize: vertical; min-height: 42px; }
+.formfoot { grid-column: span 6; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.msg { font-size: 13px; color: var(--muted); }
+.msg.err { color: var(--danger); } .msg.warn { color: var(--warn); }
+@media (max-width: 720px) { form { grid-template-columns: 1fr 1fr; } .c2, .c3 { grid-column: span 1; } .c6, .formfoot, .f.wide { grid-column: span 2; } }
+@media (max-width: 440px) { form { grid-template-columns: 1fr; } .c2, .c3, .c6, .formfoot, .f.wide { grid-column: span 1; } }
 
-    li {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background: white;
-      padding: 12px;
-      width: 320px;
-      margin: 8px auto;
-      border-radius: 8px;
-    }
-  </style>
+/* Filters */
+.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.filters input { flex: 1 1 240px; background: var(--surface); }
+.filters select { flex: 0 1 200px; width: auto; background: var(--surface); }
+.count { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; margin-left: auto; }
 
+/* Lead rows */
+ul { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
+li.lead { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 150px 130px auto; gap: 12px; align-items: center; padding: 12px 14px; border-top: 1px solid var(--line); border-left: 3px solid var(--c); }
+li.lead:first-child { border-top: 0; }
+.co { font-weight: 600; overflow-wrap: anywhere; }
+.who { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
+.email { font-family: var(--mono); font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
+.note { font-size: 13px; color: var(--muted); margin-top: 4px; overflow-wrap: anywhere; }
+.tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; margin-left: 6px; font-weight: 400; }
+li.lead select { padding: 6px 8px; font-size: 13px; color: var(--c); font-weight: 600; background: var(--bg); }
+.fu { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+.fu.over { color: var(--danger); font-weight: 500; }
+.fu.today { color: var(--warn); font-weight: 500; }
+.fu small { display: block; font-family: var(--body); font-size: 11px; color: inherit; }
+.acts { display: flex; gap: 6px; justify-content: flex-end; }
+.acts button { background: none; border: 1px solid var(--line); color: var(--fg); padding: 5px 10px; font-size: 13px; }
+.acts .del { color: var(--danger); }
+.acts .del.arm { background: var(--danger); color: var(--surface); border-color: var(--danger); }
+.empty { padding: 32px 16px; text-align: center; color: var(--muted); }
+@media (max-width: 720px) {
+  li.lead { grid-template-columns: minmax(0, 1fr) auto; }
+  li.lead .contact, li.lead .fu { grid-column: 1 / -1; }
+  li.lead .acts { grid-column: 1 / -1; justify-content: flex-start; }
+}
+.hint { color: var(--muted); font-size: 13px; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+</style>
 </head>
-  <title>Lead Manager</title>
-
-  <style>
-    body {
-      font-family: Arial;
-      background: #f4f6f8;
-      text-align: center;
-    }
-
-    h1 {
-      color: #333;
-    }
-
-    input {
-      padding: 10px;
-      width: 250px;
-      margin: 10px;
-    }
-
-    button {
-      padding: 10px 15px;
-      background: #007bff;
-      color: white;
-      border: none;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #0056b3;
-    }
-
-    li {
-      list-style: none;
-      background: white;
-      margin: 5px auto;
-      padding: 10px;
-      width: 300px;
-      border-radius: 5px;
-    }
-
-    li button {
-      background: red;
-      margin-left: 10px;
-    }
-  </style>
-</head>
-
 <body>
 
-  <h1>Vinod Lead Manager 🚀</h1>
+<div class="wrap">
+  <header>
+    <div>
+      <h1>Vinod Lead Manager</h1>
+      <p class="sub">Track outbound leads from first touch to meeting. Saved in this browser.</p>
+    </div>
+    <div class="tools">
+      <label class="btn ghost" for="importFile">Import CSV</label>
+      <input type="file" id="importFile" accept=".csv,text/csv" class="sr">
+      <button class="ghost" id="copyCsv" type="button">Copy CSV</button>
+      <button class="ghost" id="downloadCsv" type="button">Download CSV</button>
+    </div>
+  </header>
 
-  <input type="text" id="leadInput" placeholder="Enter company name">
-  <button onclick="addLead()">Add Lead</button>
+  <div class="pipe" id="pipe" role="group" aria-label="Filter by stage"></div>
+
+  <form id="leadForm" autocomplete="off">
+    <div class="f c2"><label for="fCompany">Company *</label><input id="fCompany" placeholder="Acme Ltd"></div>
+    <div class="f c2"><label for="fContact">Contact</label><input id="fContact" placeholder="Jane Smith"></div>
+    <div class="f c2"><label for="fTitle">Title</label><input id="fTitle" placeholder="Head of IT"></div>
+    <div class="f c2 wide"><label for="fEmail">Email</label><input id="fEmail" type="email" placeholder="jane@acme.com"></div>
+    <div class="f c2"><label for="fStatus">Stage</label><select id="fStatus"></select></div>
+    <div class="f c2"><label for="fFollow">Follow-up</label><input id="fFollow" type="date"></div>
+    <div class="f c6"><label for="fNotes">Notes</label><textarea id="fNotes" rows="1" placeholder="Signal, last touch, next step"></textarea></div>
+    <div class="formfoot">
+      <button class="primary" type="submit" id="saveBtn">Add Lead</button>
+      <button class="ghost" type="button" id="cancelEdit" hidden>Cancel edit</button>
+      <span class="msg" id="msg" aria-live="polite"></span>
+    </div>
+  </form>
+
+  <div class="filters">
+    <input id="search" type="search" placeholder="Search company, contact, email, notes">
+    <select id="sort" aria-label="Sort">
+      <option value="follow">Sort: follow-up date</option>
+      <option value="recent">Sort: newest first</option>
+      <option value="company">Sort: company A to Z</option>
+    </select>
+    <span class="count" id="count"></span>
+  </div>
 
   <ul id="leadList"></ul>
+  <p class="hint">CSV columns: company, contact, title, email, status, followUp (YYYY-MM-DD), notes. Apollo exports work too: Company, First Name, Last Name, Title and Email are picked up automatically.</p>
+</div>
 
-  <script>
-    // ✅ ALWAYS TOP
-    let leads = JSON.parse(localStorage.getItem("leads")) || [];
+<script>
+(function () {
+  const KEY = "leads";
+  const STAGES = ["New", "Contacted", "Replied", "Meeting", "Won", "Lost"];
+  const COLOR = { New: "--s-new", Contacted: "--s-contacted", Replied: "--s-replied", Meeting: "--s-meeting", Won: "--s-won", Lost: "--s-lost" };
+  const $ = id => document.getElementById(id);
+  const todayISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  const addDays = n => { const d = new Date(); d.setDate(d.getDate() + n); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
+  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 
-    function addLead() {
-      let input = document.getElementById("leadInput").value;
+  function examples() {
+    return [
+      { company: "Northbeam Logistics", contact: "Priya Nair", title: "IT Director", email: "priya@northbeam.example", status: "Contacted", followUp: addDays(-1), notes: "Opened email twice. Bump with case study.", example: true },
+      { company: "Halden Health Group", contact: "Tom Reeve", title: "Head of HR Systems", email: "tom.reeve@halden.example", status: "Replied", followUp: todayISO(), notes: "Asked for Workday pricing. Send deck.", example: true },
+      { company: "Corvel Retail UK", contact: "Amara Okafor", title: "CIO", email: "amara@corvel.example", status: "New", followUp: addDays(3), notes: "Hiring 4 ServiceNow roles on LinkedIn.", example: true }
+    ].map(l => ({ id: uid(), created: Date.now(), ...l }));
+  }
 
-      if (input === "") {
-        alert("Please enter a company");
-        return;
-      }
+  function normalize(l) {
+    if (typeof l === "string") l = { company: l };
+    return {
+      id: l.id || uid(), created: l.created || Date.now(),
+      company: String(l.company || "").trim(), contact: l.contact || "", title: l.title || "",
+      email: l.email || "", status: STAGES.includes(l.status) ? l.status : "New",
+      followUp: /^\d{4}-\d{2}-\d{2}$/.test(l.followUp || "") ? l.followUp : "", notes: l.notes || "",
+      example: !!l.example
+    };
+  }
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (raw === null) return examples();
+      return JSON.parse(raw).map(normalize).filter(l => l.company);
+    } catch (e) { return examples(); }
+  }
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(leads)); } catch (e) {} }
 
-      leads.push(input);
+  let leads = load();
+  let stageFilter = "All";
+  let editingId = null;
 
-      localStorage.setItem("leads", JSON.stringify(leads));
+  STAGES.forEach(s => { const o = document.createElement("option"); o.value = o.textContent = s; $("fStatus").append(o); });
 
-      document.getElementById("leadInput").value = "";
+  function msg(text, kind) { const m = $("msg"); m.textContent = text || ""; m.className = "msg" + (kind ? " " + kind : ""); }
 
-      renderLeads();
+  function dueState(l) {
+    if (!l.followUp || l.status === "Won" || l.status === "Lost") return "";
+    const t = todayISO();
+    return l.followUp < t ? "over" : l.followUp === t ? "today" : "";
+  }
+
+  function renderPipe() {
+    const pipe = $("pipe"); pipe.replaceChildren();
+    const due = leads.filter(l => dueState(l)).length;
+    const cells = [["All", leads.length, null], ...STAGES.map(s => [s, leads.filter(l => l.status === s).length, COLOR[s]]), ["Due", due, "--warn"]];
+    cells.forEach(([label, n, c]) => {
+      const b = document.createElement("button"); b.type = "button";
+      if (c) b.style.setProperty("--c", `var(${c})`);
+      if (label === "Due") b.className = "due";
+      b.setAttribute("aria-pressed", String(stageFilter === label));
+      const nn = document.createElement("span"); nn.className = "n"; nn.textContent = n;
+      const ll = document.createElement("span"); ll.className = "l"; ll.textContent = label === "Due" ? "Due now" : label;
+      b.append(nn, ll);
+      b.addEventListener("click", () => { stageFilter = stageFilter === label ? "All" : label; render(); });
+      pipe.append(b);
+    });
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return "";
+    const [y, m, d] = iso.split("-").map(Number);
+    return new Date(y, m - 1, d).toLocaleDateString(undefined, { day: "numeric", month: "short" });
+  }
+
+  function visible() {
+    const q = $("search").value.trim().toLowerCase();
+    let out = leads.filter(l => {
+      if (stageFilter === "Due" && !dueState(l)) return false;
+      if (stageFilter !== "All" && stageFilter !== "Due" && l.status !== stageFilter) return false;
+      if (!q) return true;
+      return [l.company, l.contact, l.title, l.email, l.notes].join(" ").toLowerCase().includes(q);
+    });
+    const sort = $("sort").value;
+    if (sort === "company") out.sort((a, b) => a.company.localeCompare(b.company));
+    else if (sort === "recent") out.sort((a, b) => b.created - a.created);
+    else out.sort((a, b) => (a.followUp || "9999") .localeCompare(b.followUp || "9999") || b.created - a.created);
+    return out;
+  }
+
+  function render() {
+    renderPipe();
+    const list = $("leadList"); list.replaceChildren();
+    const rows = visible();
+    $("count").textContent = rows.length === leads.length ? `${leads.length} leads` : `${rows.length} of ${leads.length} leads`;
+    if (!rows.length) {
+      const li = document.createElement("li"); li.className = "empty";
+      li.textContent = leads.length ? "No leads match this filter." : "No leads yet. Add your first company above or import a CSV.";
+      list.append(li); return;
     }
+    rows.forEach(l => {
+      const li = document.createElement("li"); li.className = "lead";
+      li.style.setProperty("--c", `var(${COLOR[l.status]})`);
 
-    function renderLeads() {
-      let list = "";
+      const main = document.createElement("div"); main.style.minWidth = "0";
+      const co = document.createElement("div"); co.className = "co"; co.textContent = l.company;
+      if (l.example) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "example"; co.append(t); }
+      main.append(co);
+      if (l.notes) { const n = document.createElement("div"); n.className = "note"; n.textContent = l.notes; main.append(n); }
 
-      for (let i = 0; i < leads.length; i++) {
-        list += `<li>
-          ${leads[i]} 
-          <button onclick="deleteLead(${i})">❌</button>
-        </li>`;
-      }
+      const contact = document.createElement("div"); contact.className = "contact"; contact.style.minWidth = "0";
+      if (l.contact || l.title) { const w = document.createElement("div"); w.className = "who"; w.textContent = [l.contact, l.title].filter(Boolean).join(", "); contact.append(w); }
+      if (l.email) { const e = document.createElement("div"); e.className = "email"; e.textContent = l.email; contact.append(e); }
 
-      document.getElementById("leadList").innerHTML = list;
+      const sel = document.createElement("select"); sel.setAttribute("aria-label", "Stage for " + l.company);
+      STAGES.forEach(s => { const o = document.createElement("option"); o.value = o.textContent = s; if (s === l.status) o.selected = true; sel.append(o); });
+      sel.addEventListener("change", () => { l.status = sel.value; save(); render(); });
+
+      const fu = document.createElement("div"); const ds = dueState(l);
+      fu.className = "fu" + (ds ? " " + ds : "");
+      fu.textContent = l.followUp ? fmtDate(l.followUp) : "No follow-up";
+      if (ds) { const s = document.createElement("small"); s.textContent = ds === "over" ? "Overdue" : "Today"; fu.append(s); }
+
+      const acts = document.createElement("div"); acts.className = "acts";
+      const ed = document.createElement("button"); ed.type = "button"; ed.textContent = "Edit";
+      ed.addEventListener("click", () => startEdit(l.id));
+      const del = document.createElement("button"); del.type = "button"; del.className = "del"; del.textContent = "Delete";
+      let armed = false;
+      del.addEventListener("click", () => {
+        if (!armed) { armed = true; del.classList.add("arm"); del.textContent = "Confirm"; setTimeout(() => { armed = false; del.classList.remove("arm"); del.textContent = "Delete"; }, 3000); return; }
+        leads = leads.filter(x => x.id !== l.id); save();
+        if (editingId === l.id) resetForm();
+        render(); msg(`Deleted ${l.company}.`);
+      });
+      acts.append(ed, del);
+
+      li.append(main, contact, sel, fu, acts);
+      list.append(li);
+    });
+  }
+
+  const F = { company: "fCompany", contact: "fContact", title: "fTitle", email: "fEmail", status: "fStatus", followUp: "fFollow", notes: "fNotes" };
+  function resetForm() {
+    editingId = null; $("leadForm").reset(); $("fStatus").value = "New";
+    $("saveBtn").textContent = "Add Lead"; $("cancelEdit").hidden = true;
+  }
+  function startEdit(id) {
+    const l = leads.find(x => x.id === id); if (!l) return;
+    editingId = id; Object.entries(F).forEach(([k, el]) => { $(el).value = l[k] || ""; });
+    $("saveBtn").textContent = "Save changes"; $("cancelEdit").hidden = false; msg(`Editing ${l.company}.`);
+    $("fCompany").focus(); window.scrollTo({ top: $("leadForm").offsetTop - 16, behavior: "smooth" });
+  }
+  $("cancelEdit").addEventListener("click", () => { resetForm(); msg(""); });
+
+  $("leadForm").addEventListener("submit", e => {
+    e.preventDefault();
+    const data = {}; Object.entries(F).forEach(([k, el]) => { data[k] = $(el).value.trim(); });
+    if (!data.company) { msg("Enter a company name to save the lead.", "err"); $("fCompany").focus(); return; }
+    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { msg("That email looks incomplete. Check it or leave it blank.", "err"); $("fEmail").focus(); return; }
+    const dupe = leads.find(l => l.id !== editingId && ((data.email && l.email.toLowerCase() === data.email.toLowerCase()) || l.company.toLowerCase() === data.company.toLowerCase()));
+    if (editingId) {
+      const l = leads.find(x => x.id === editingId);
+      Object.assign(l, normalize({ ...l, ...data, example: false }));
+      msg(`Saved ${data.company}.`);
+    } else {
+      leads.push(normalize({ ...data, created: Date.now() }));
+      msg(dupe ? `Added ${data.company}. Note: ${dupe.company} is already in your list.` : `Added ${data.company}.`, dupe ? "warn" : "");
     }
+    save(); resetForm(); render();
+  });
 
-    function deleteLead(index) {
-      leads.splice(index, 1);
+  $("search").addEventListener("input", render);
+  $("sort").addEventListener("change", render);
 
-      localStorage.setItem("leads", JSON.stringify(leads));
+  /* CSV */
+  const COLS = ["company", "contact", "title", "email", "status", "followUp", "notes"];
+  const esc = v => { v = String(v ?? ""); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
+  const toCsv = () => [COLS.join(","), ...leads.map(l => COLS.map(c => esc(l[c])).join(","))].join("\n");
 
-      renderLeads();
+  $("copyCsv").addEventListener("click", () => {
+    const csv = toCsv();
+    const done = () => msg(`Copied ${leads.length} leads as CSV. Paste into Google Sheets.`);
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(csv).then(done).catch(() => fallbackCopy(csv, done));
+    } else fallbackCopy(csv, done);
+  });
+  function fallbackCopy(text, done) {
+    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.append(ta); ta.select();
+    try { document.execCommand("copy") ? done() : msg("Copy was blocked here. Use Download CSV instead.", "err"); }
+    catch (e) { msg("Copy was blocked here. Use Download CSV instead.", "err"); }
+    ta.remove();
+  }
+  $("downloadCsv").addEventListener("click", () => {
+    const blob = new Blob([toCsv()], { type: "text/csv" });
+    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `leads-${todayISO()}.csv`;
+    document.body.append(a); a.click(); a.remove();
+    msg("If no file downloaded, this viewer blocks downloads. Use Copy CSV, or open the page from GitHub.");
+  });
+
+  function parseCsv(text) {
+    const rows = []; let row = [], cur = "", q = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
+      else if (ch === '"') q = true;
+      else if (ch === ",") { row.push(cur); cur = ""; }
+      else if (ch === "\n" || ch === "\r") { if (ch === "\r" && text[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
+      else cur += ch;
     }
+    if (cur || row.length) { row.push(cur); rows.push(row); }
+    return rows.filter(r => r.some(c => c.trim()));
+  }
+  $("importFile").addEventListener("change", e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const rows = parseCsv(String(reader.result).replace(/^﻿/, ""));
+      if (rows.length < 2) { msg("That file has no lead rows. It needs a header row plus at least one lead.", "err"); return; }
+      const head = rows[0].map(h => h.trim().toLowerCase().replace(/[^a-z]/g, ""));
+      const idx = names => head.findIndex(h => names.includes(h));
+      const map = {
+        company: idx(["company", "companyname", "account", "accountname", "organization"]),
+        contact: idx(["contact", "name", "fullname"]), first: idx(["firstname"]), last: idx(["lastname"]),
+        title: idx(["title", "jobtitle"]), email: idx(["email", "emailaddress", "workemail"]),
+        status: idx(["status", "stage"]), followUp: idx(["followup", "followupdate", "nextstep"]), notes: idx(["notes", "note"])
+      };
+      if (map.company < 0) { msg("No company column found. Add a header named company.", "err"); return; }
+      const have = new Set(leads.map(l => (l.email || l.company).toLowerCase()));
+      let added = 0, skipped = 0;
+      rows.slice(1).forEach(r => {
+        const g = k => map[k] >= 0 ? (r[map[k]] || "").trim() : "";
+        const contact = g("contact") || [g("first"), g("last")].filter(Boolean).join(" ");
+        const l = normalize({ company: g("company"), contact, title: g("title"), email: g("email"), status: g("status"), followUp: g("followUp"), notes: g("notes") });
+        if (!l.company) return;
+        const key = (l.email || l.company).toLowerCase();
+        if (have.has(key)) { skipped++; return; }
+        have.add(key); leads.push(l); added++;
+      });
+      save(); render();
+      msg(`Imported ${added} leads${skipped ? `, skipped ${skipped} duplicates` : ""}.`);
+      e.target.value = "";
+    };
+    reader.readAsText(file);
+  });
 
-    // ✅ ALWAYS LAST
-    renderLeads();
-  </script>
-
+  resetForm();
+  render();
+})();
+</script>
 </body>
 </html>
