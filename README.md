@@ -2,6 +2,19 @@
 
 A lightweight outbound lead tracker in a single HTML file. No install, no server, no sign-up. Open `index.html` in a browser and start adding leads.
 
+## Why I built it
+Running cold email and LinkedIn outreach means juggling Apollo exports, sequence tools and spreadsheets. Leads that reply or need a follow-up get lost between them. A full CRM is overkill for a solo marketer or a small team. This app sits in the gap: one page to see every active lead, what stage it's at, and who needs a nudge today.
+
+## Use cases
+- **Daily follow-up list.** Open the app, click "Due now", and work through overdue and today's follow-ups first.
+- **Tracking replies from cold email.** Move a lead from Contacted to Replied to Meeting as conversations progress, with notes on what was said.
+- **Working an Apollo list.** Export a filtered list from Apollo, import the CSV, and duplicates are skipped automatically.
+- **Signal-based prospecting.** Log the trigger (hiring, funding, new tech) in notes so every follow-up references a real reason to reach out.
+- **Weekly reporting.** Pipeline counts show at a glance how many leads sit in each stage. Copy the CSV into Google Sheets for a report.
+- **Event or LinkedIn leads.** Quick-add contacts met at events or on LinkedIn, then set a follow-up date before they go cold.
+
+Who it's for: SDRs, founders doing their own outbound, freelancers and small agencies who want a pipeline view without paying for a CRM.
+
 ## Features
 - Lead details: company, contact, title, email, stage, follow-up date, notes
 - Pipeline stages: New, Contacted, Replied, Meeting, Won, Lost
