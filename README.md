@@ -1,6 +1,6 @@
 # Vinod Lead Manager
 
-A lightweight outbound lead tracker in a single HTML file. No install, no server, no sign-up. Open `Index.html` in a browser and start adding leads.
+A lightweight outbound lead tracker in a single HTML file. No install, no server, no sign-up. Open `index.html` in a browser and start adding leads.
 
 ## Features
 - Lead details: company, contact, title, email, stage, follow-up date, notes
@@ -16,8 +16,11 @@ A lightweight outbound lead tracker in a single HTML file. No install, no server
 - Light and dark mode, works on mobile
 - Data stored in your browser's localStorage
 
+## Live app
+https://joshivinod475-sudo.github.io/Lead-Manager/
+
 ## How to use
-1. Download `Index.html` (or clone the repo).
+1. Download `index.html` (or clone the repo).
 2. Double-click the file to open it in Chrome, Edge or Firefox.
 3. Add leads, or import a CSV.
 
