@@ -2,412 +2,563 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Vinod Lead Manager</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2214%22 fill=%22%2355642a%22/%3E%3Ctext x=%2232%22 y=%2248%22 font-family=%22Georgia,serif%22 font-style=%22italic%22 font-size=%2246%22 text-anchor=%22middle%22 fill=%22%23f6f4ee%22%3E3%3C/text%3E%3C/svg%3E">
+<meta property="og:title" content="3marketeer | B2B marketing studio">
+<meta property="og:description" content="Strategy, creative and growth systems for B2B companies. Outbound, brand, web, content, ads and automation.">
+<meta property="og:url" content="https://3marketeer.com/">
+<title>3marketeer | B2B Marketing Studio</title>
+<meta name="description" content="3marketeer is a full-service B2B marketing studio: strategy, creative and growth systems under one roof.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Jost:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap">
 <style>
-/* Layout: one working column. Pipeline strip, add form, filters, lead rows. */
+/* Layout: gallery editorial. Asymmetric 12-col grid, left-set type, one oversized italic "3" as the only loud element, one ink band for the outbound spec sheet. Single light look by design. */
 :root {
-  --bg: #f3f5f7;
-  --surface: #ffffff;
-  --sunk: #eef1f4;
-  --fg: #1c2530;
-  --muted: #5f6b78;
-  --line: #dde3e9;
-  --accent: #1f6feb;
-  --accent-fg: #ffffff;
-  --danger: #c43c3c;
-  --warn: #b26a00;
-  --s-new: #6b7785; --s-contacted: #1f6feb; --s-replied: #7a4fd6;
-  --s-meeting: #b26a00; --s-won: #1d8a4e; --s-lost: #9aa3ad;
-  --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
-  --body: "IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --bg: #12171d; --surface: #1b222a; --sunk: #161c23; --fg: #e6ebf0; --muted: #94a1ae;
-    --line: #2c3540; --accent: #5b9bff; --accent-fg: #0d1218; --danger: #f07a7a; --warn: #f0b04a;
-    --s-new: #94a1ae; --s-contacted: #5b9bff; --s-replied: #a98bf0;
-    --s-meeting: #f0b04a; --s-won: #4fc485; --s-lost: #6b7580;
-    color-scheme: dark;
-  }
-}
-:root[data-theme="dark"] {
-  --bg: #12171d; --surface: #1b222a; --sunk: #161c23; --fg: #e6ebf0; --muted: #94a1ae;
-  --line: #2c3540; --accent: #5b9bff; --accent-fg: #0d1218; --danger: #f07a7a; --warn: #f0b04a;
-  --s-new: #94a1ae; --s-contacted: #5b9bff; --s-replied: #a98bf0;
-  --s-meeting: #f0b04a; --s-won: #4fc485; --s-lost: #6b7580;
-  color-scheme: dark;
+  --paper: #f6f4ee;
+  --paper-2: #ecE9df;
+  --ink: #1c1f14;
+  --ink-2: #5c5f4d;
+  --line: #d8d5c6;
+  --blue: #55642a;
+  --blue-soft: #bfca8e;
+  --on-ink: #efede3;
+  --on-ink-2: #aaad97;
+  --line-ink: #353a2b;
+  --display: "Cormorant Garamond", Garamond, "Times New Roman", serif;
+  --body: "Jost", "Futura", "Century Gothic", Arial, sans-serif;
+  --label: "Jost", "Futura", "Century Gothic", Arial, sans-serif;
+  --mono: "DM Mono", ui-monospace, "SFMono-Regular", Consolas, monospace;
+  --max: 1240px;
+  --gut-l: max(16px, env(safe-area-inset-left, 0px));
+  --gut-r: max(16px, env(safe-area-inset-right, 0px));
+  color-scheme: light;
 }
 * { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
 body {
-  background: var(--bg); color: var(--fg); font-family: var(--body); font-size: 15px; line-height: 1.45;
-  padding-left: max(16px, env(safe-area-inset-left, 0px));
-  padding-right: max(16px, env(safe-area-inset-right, 0px));
-  padding-block: 32px 48px;
+  background: var(--paper); color: var(--ink);
+  font-family: var(--body); font-weight: 400; font-size: 17px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
-.wrap { max-width: 980px; margin: 0 auto; display: flex; flex-direction: column; gap: 20px; }
-header { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 12px; }
-h1 { font-family: var(--display); font-size: 30px; margin: 0; line-height: 1.1; text-wrap: balance; }
-.sub { color: var(--muted); margin: 4px 0 0; }
-.tools { display: flex; gap: 8px; flex-wrap: wrap; }
-button, .btn { font: inherit; font-size: 14px; cursor: pointer; border-radius: 6px; }
-.ghost { background: var(--surface); color: var(--fg); border: 1px solid var(--line); padding: 8px 12px; }
-.ghost:hover { border-color: var(--muted); }
-.primary { background: var(--accent); color: var(--accent-fg); border: 0; padding: 10px 18px; font-weight: 600; }
-button:focus-visible, input:focus-visible, select:focus-visible, textarea:focus-visible, .btn:focus-within { outline: 2px solid var(--accent); outline-offset: 2px; }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 60; background: var(--paper); }
+a { color: inherit; }
+.wrap { max-width: var(--max); margin: 0 auto; padding-left: var(--gut-l); padding-right: var(--gut-r); }
+@media (min-width: 900px) { :root { --gut-l: max(40px, env(safe-area-inset-left, 0px)); --gut-r: max(40px, env(safe-area-inset-right, 0px)); } }
+.eyebrow { font-family: var(--label); font-weight: 500; font-size: 12px; letter-spacing: .26em; text-transform: uppercase; color: var(--ink-2); }
+h1, h2, h3 { font-family: var(--display); font-weight: 400; margin: 0; text-wrap: balance; letter-spacing: -0.01em; }
+h2 { font-size: clamp(40px, 5.8vw, 76px); line-height: 1; font-weight: 400; }
+h3 { font-size: clamp(27px, 2.6vw, 34px); line-height: 1.1; font-weight: 500; }
+em { font-style: italic; }
+p { margin: 0; }
+:focus-visible { outline: 2px solid var(--blue); outline-offset: 3px; }
 
-/* Pipeline strip */
-.pipe { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
-.pipe button { background: var(--surface); border: 0; border-radius: 0; padding: 10px 10px 12px; text-align: left; display: flex; flex-direction: column; gap: 2px; color: var(--fg); border-top: 3px solid transparent; }
-.pipe button[aria-pressed="true"] { background: var(--sunk); border-top-color: var(--c, var(--accent)); }
-.pipe .n { font-family: var(--mono); font-size: 22px; font-weight: 500; font-variant-numeric: tabular-nums; }
-.pipe .l { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.pipe .due .n { color: var(--warn); }
-@media (max-width: 720px) { .pipe { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+/* Buttons */
+.btn { display: inline-flex; align-items: center; gap: 10px; font: 500 13px/1 var(--body); letter-spacing: .14em; text-transform: uppercase; text-decoration: none; padding: 15px 22px; border-radius: 999px; border: 1px solid var(--ink); cursor: pointer; transition: background .2s, color .2s, border-color .2s; }
+.btn-solid { background: var(--ink); color: var(--paper); }
+.btn-solid:hover { background: var(--blue); border-color: var(--blue); }
+.btn-line { background: transparent; color: var(--ink); }
+.btn-line:hover { border-color: var(--blue); color: var(--blue); }
+.btn .arr { transition: transform .2s; }
+.btn:hover .arr { transform: translateX(3px); }
 
-/* Form */
-form { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px; }
-.f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
-.f label { font-size: 12px; color: var(--muted); text-transform: uppercase; letter-spacing: .05em; }
-.c2 { grid-column: span 2; } .c3 { grid-column: span 3; } .c6 { grid-column: span 6; }
-input, select, textarea { font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 9px 10px; min-width: 0; width: 100%; }
-textarea { resize: vertical; min-height: 42px; }
-.formfoot { grid-column: span 6; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
-.msg { font-size: 13px; color: var(--muted); }
-.msg.err { color: var(--danger); } .msg.warn { color: var(--warn); }
-@media (max-width: 720px) { form { grid-template-columns: 1fr 1fr; } .c2, .c3 { grid-column: span 1; } .c6, .formfoot, .f.wide { grid-column: span 2; } }
-@media (max-width: 440px) { form { grid-template-columns: 1fr; } .c2, .c3, .c6, .formfoot, .f.wide { grid-column: span 1; } }
+/* Header */
+.top { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid transparent; transition: border-color .2s; }
+.top.scrolled { border-bottom-color: var(--line); }
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 20px; padding-block: 18px; }
+.mark { font-family: var(--display); font-weight: 500; font-size: 29px; text-decoration: none; letter-spacing: -0.01em; white-space: nowrap; }
+.mark i { color: var(--blue); font-style: italic; margin-right: 1px; }
+nav ul { display: flex; gap: 30px; list-style: none; margin: 0; padding: 0; }
+nav a { text-decoration: none; font-size: 15px; color: var(--ink-2); }
+nav a:hover { color: var(--ink); }
+.top .btn { padding: 11px 18px; font-size: 14px; }
+@media (max-width: 860px) { nav { display: none; } }
+@media (max-width: 420px) { .top .btn .long { display: none; } }
 
-/* Filters */
-.filters { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.filters input { flex: 1 1 240px; background: var(--surface); }
-.filters select { flex: 0 1 200px; width: auto; background: var(--surface); }
-.count { color: var(--muted); font-size: 13px; font-variant-numeric: tabular-nums; margin-left: auto; }
-
-/* Lead rows */
-ul { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; }
-li.lead { display: grid; grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.3fr) 150px 130px auto; gap: 12px; align-items: center; padding: 12px 14px; border-top: 1px solid var(--line); border-left: 3px solid var(--c); }
-li.lead:first-child { border-top: 0; }
-.co { font-weight: 600; overflow-wrap: anywhere; }
-.who { color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-.email { font-family: var(--mono); font-size: 12.5px; color: var(--muted); overflow-wrap: anywhere; }
-.note { font-size: 13px; color: var(--muted); margin-top: 4px; overflow-wrap: anywhere; }
-.tag { font-size: 11px; color: var(--muted); border: 1px solid var(--line); border-radius: 4px; padding: 0 6px; margin-left: 6px; font-weight: 400; }
-li.lead select { padding: 6px 8px; font-size: 13px; color: var(--c); font-weight: 600; background: var(--bg); }
-.fu { font-family: var(--mono); font-size: 12.5px; font-variant-numeric: tabular-nums; }
-.fu.over { color: var(--danger); font-weight: 500; }
-.fu.today { color: var(--warn); font-weight: 500; }
-.fu small { display: block; font-family: var(--body); font-size: 11px; color: inherit; }
-.acts { display: flex; gap: 6px; justify-content: flex-end; }
-.acts button { background: none; border: 1px solid var(--line); color: var(--fg); padding: 5px 10px; font-size: 13px; }
-.acts .del { color: var(--danger); }
-.acts .del.arm { background: var(--danger); color: var(--surface); border-color: var(--danger); }
-.empty { padding: 32px 16px; text-align: center; color: var(--muted); }
-@media (max-width: 720px) {
-  li.lead { grid-template-columns: minmax(0, 1fr) auto; }
-  li.lead .contact, li.lead .fu { grid-column: 1 / -1; }
-  li.lead .acts { grid-column: 1 / -1; justify-content: flex-start; }
+/* Hero */
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { position: relative; display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 0 24px; padding-block: clamp(48px, 8vw, 104px) clamp(48px, 7vw, 88px); }
+.hero-copy { grid-column: 1 / span 8; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 28px; }
+.hero h1 { font-size: clamp(60px, 9.6vw, 146px); line-height: .9; letter-spacing: -0.02em; font-weight: 300; }
+.hero h1 em { font-weight: 400; }
+.hero h1 em { color: var(--blue); }
+.hero h1 .ln { display: block; animation: rise .9s cubic-bezier(.2,.7,.1,1) both; }
+.hero h1 .ln:nth-child(2) { animation-delay: .08s; }
+.hero h1 .ln:nth-child(3) { animation-delay: .16s; }
+@keyframes rise { from { transform: translateY(18px); } to { transform: none; } }
+.lede { font-size: clamp(18px, 1.6vw, 21px); max-width: 34em; color: var(--ink-2); }
+.lede strong { color: var(--ink); font-weight: 500; }
+.hero-cta { display: flex; flex-wrap: wrap; gap: 12px; }
+.three {
+  position: absolute; z-index: 1; right: 1vw; top: 2%;
+  font-family: var(--display); font-style: italic; font-weight: 400; line-height: .8;
+  font-size: clamp(320px, 40vw, 600px); font-weight: 300; color: var(--blue); pointer-events: none; user-select: none;
+  animation: drift 1.4s cubic-bezier(.2,.7,.1,1) both;
 }
-.hint { color: var(--muted); font-size: 13px; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@keyframes drift { from { transform: translateY(14px) rotate(-3deg); } to { transform: none; } }
+.pillars-tag { grid-column: 9 / span 4; align-self: end; position: relative; z-index: 2; display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+.pillars-tag li { list-style: none; display: flex; justify-content: space-between; gap: 16px; padding: 12px 0; border-top: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); font-size: 15px; }
+.pillars-tag li:last-child { border-bottom: 1px solid color-mix(in srgb, var(--ink) 25%, transparent); }
+.pillars-tag span:first-child { font-family: var(--label); font-size: 12.5px; color: var(--ink-2); letter-spacing: .08em; }
+.pillars-tag ul { margin: 0; padding: 0; }
+@media (max-width: 900px) {
+  .hero-copy { grid-column: 1 / -1; }
+  .pillars-tag { grid-column: 1 / -1; }
+  .three { opacity: .14; right: -14vw; }
+}
+
+/* Section scaffolding */
+section { scroll-margin-top: 80px; }
+.sec { padding-block: clamp(72px, 10vw, 136px); }
+.sec-head { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 20px 24px; margin-bottom: clamp(40px, 6vw, 72px); }
+.sec-head .eyebrow { grid-column: 1 / span 3; padding-top: 14px; }
+.sec-head h2 { grid-column: 4 / span 9; }
+.sec-head p { grid-column: 4 / span 7; color: var(--ink-2); font-size: 19px; max-width: 36em; }
+@media (max-width: 900px) { .sec-head .eyebrow, .sec-head h2, .sec-head p { grid-column: 1 / -1; } .sec-head .eyebrow { padding-top: 0; } }
+
+/* Services */
+.services { border-top: 1px solid var(--line); }
+.pillar { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; padding-block: 40px 48px; border-bottom: 1px solid var(--line); }
+.pillar-head { grid-column: 1 / span 4; display: flex; flex-direction: column; gap: 14px; }
+.pillar-num { font-family: var(--display); font-style: italic; font-weight: 300; font-size: 76px; line-height: .9; color: var(--blue); }
+.pillar-head p { color: var(--ink-2); max-width: 26em; }
+.svc-list { grid-column: 6 / span 7; list-style: none; margin: 0; padding: 0; }
+@media (max-width: 900px) { .pillar-head, .svc-list { grid-column: 1 / -1; } }
+details.svc { border-top: 1px solid var(--line); }
+details.svc:first-child { border-top: 0; }
+details.svc summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 16px; padding: 16px 0; }
+details.svc summary::-webkit-details-marker { display: none; }
+.svc-name { font-size: 19px; font-weight: 400; letter-spacing: -0.005em; transition: color .2s; }
+details.svc summary:hover .svc-name { color: var(--blue); }
+.svc-plus { font-family: var(--label); font-size: 18px; color: var(--ink-2); transition: transform .25s; }
+details.svc[open] .svc-plus { transform: rotate(45deg); color: var(--blue); }
+.svc-body { padding: 0 0 22px; display: grid; gap: 12px; max-width: 40em; }
+.svc-body p { color: var(--ink-2); }
+.deliv { display: flex; flex-wrap: wrap; gap: 6px; padding: 0; margin: 0; list-style: none; }
+.deliv li { font-family: var(--label); font-size: 12.5px; padding: 5px 10px; border: 1px solid var(--line); border-radius: 999px; color: var(--ink); background: var(--paper); }
+
+/* Ink band: outbound spec sheet */
+.band { background: var(--ink); color: var(--on-ink); }
+.band .eyebrow { color: var(--on-ink-2); }
+.band h2 em { color: var(--blue-soft); }
+.band .sec-head p { color: var(--on-ink-2); }
+.spec-grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
+.spec-notes { grid-column: 1 / span 5; display: flex; flex-direction: column; gap: 28px; }
+.note { display: grid; gap: 6px; padding-top: 18px; border-top: 1px solid var(--line-ink); }
+.note h3 { font-size: 24px; color: var(--on-ink); }
+.note p { color: var(--on-ink-2); font-size: 16px; }
+.spec { grid-column: 7 / span 6; min-width: 0; border: 1px solid var(--line-ink); border-radius: 14px; background: #262a1c; font-family: var(--mono); font-size: 13.5px; overflow: hidden; }
+.spec-top { display: flex; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line-ink); color: var(--on-ink-2); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
+.spec-top b { color: var(--on-ink); font-weight: 500; letter-spacing: 0; text-transform: none; }
+.spec-rows { overflow-x: auto; }
+.spec table { width: 100%; border-collapse: collapse; min-width: 440px; }
+.spec td { padding: 11px 18px; border-bottom: 1px solid var(--line-ink); vertical-align: top; color: var(--on-ink); }
+.spec tr:last-child td { border-bottom: 0; }
+.spec td:first-child { color: var(--on-ink-2); width: 34%; white-space: nowrap; }
+.spec .ok { color: #cbd78f; }
+.spec .val { color: var(--blue-soft); }
+.spec-foot { padding: 12px 18px; border-top: 1px solid var(--line-ink); color: var(--on-ink-2); font-size: 12px; }
+@media (max-width: 900px) { .spec-notes, .spec { grid-column: 1 / -1; } }
+
+/* Process */
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 1px solid var(--ink); }
+.step { padding: 26px 24px 32px 0; display: flex; flex-direction: column; gap: 12px; border-right: 1px solid var(--line); }
+.step + .step { padding-left: 24px; }
+.step:last-child { border-right: 0; }
+.step-meta { display: flex; justify-content: space-between; gap: 10px; font-family: var(--label); font-size: 12.5px; color: var(--ink-2); letter-spacing: .06em; }
+.step-meta b { color: var(--blue); font-weight: 500; }
+.step p { color: var(--ink-2); font-size: 16px; }
+@media (max-width: 900px) {
+  .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .step:nth-child(2) { border-right: 0; }
+  .step:nth-child(3) { padding-left: 0; }
+  .step:nth-child(n+3) { border-top: 1px solid var(--line); }
+}
+@media (max-width: 560px) {
+  .steps { grid-template-columns: 1fr; }
+  .step, .step + .step { padding-left: 0; border-right: 0; }
+  .step + .step { border-top: 1px solid var(--line); }
+}
+
+/* Engagements */
+.models { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+.model { background: var(--paper-2); border-radius: 18px; padding: 32px 28px; display: flex; flex-direction: column; gap: 18px; }
+.model.feature { background: var(--ink); color: var(--on-ink); }
+.model.feature .model-sub, .model.feature li { color: var(--on-ink-2); }
+.model.feature li::before { color: var(--blue-soft); }
+.model.feature .btn { border-color: var(--on-ink); background: var(--on-ink); color: var(--ink); }
+.model.feature .btn:hover { background: var(--blue-soft); border-color: var(--blue-soft); }
+.model-kind { font-family: var(--label); font-weight: 500; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--blue); }
+.model.feature .model-kind { color: var(--blue-soft); }
+.model h3 { font-size: 38px; }
+.model-sub { color: var(--ink-2); font-size: 16px; }
+.model ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 9px; font-size: 15.5px; color: var(--ink-2); }
+.model li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 8px; }
+.model li::before { content: "+"; font-family: var(--label); color: var(--blue); }
+.model .btn { margin-top: auto; align-self: flex-start; }
+@media (max-width: 980px) { .models { grid-template-columns: 1fr; } }
+
+/* Stack */
+.stack { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
+.stack-groups { grid-column: 4 / span 9; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px 24px; }
+.stack-groups div { display: flex; flex-direction: column; gap: 10px; border-top: 1px solid var(--ink); padding-top: 14px; }
+.stack-groups h4 { margin: 0; font-family: var(--label); font-weight: 500; font-size: 12px; letter-spacing: .24em; text-transform: uppercase; color: var(--ink-2); }
+.stack-groups p { font-family: var(--display); font-size: 25px; font-weight: 500; line-height: 1.35; }
+@media (max-width: 900px) { .stack-groups { grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .stack-groups { grid-template-columns: 1fr; } }
+
+/* FAQ */
+.faq { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
+.faq-list { grid-column: 4 / span 9; border-top: 1px solid var(--line); }
+.faq-list details { border-bottom: 1px solid var(--line); }
+.faq-list summary { list-style: none; cursor: pointer; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px; padding: 22px 0; font-family: var(--display); font-size: clamp(21px, 2vw, 26px); line-height: 1.25; }
+.faq-list summary::-webkit-details-marker { display: none; }
+.faq-list summary::after { content: "+"; font-family: var(--label); font-size: 18px; color: var(--ink-2); transition: transform .25s; }
+.faq-list details[open] summary::after { transform: rotate(45deg); color: var(--blue); }
+.faq-list details p { padding: 0 0 24px; color: var(--ink-2); max-width: 40em; }
+@media (max-width: 900px) { .faq-list { grid-column: 1 / -1; } }
+
+/* Contact */
+.contact { background: var(--blue); color: #fff; }
+.contact .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 40px 24px; padding-block: clamp(72px, 10vw, 128px); }
+.contact-copy { grid-column: 1 / span 6; display: flex; flex-direction: column; gap: 26px; }
+.contact h2 { font-size: clamp(50px, 7vw, 100px); line-height: .95; font-weight: 300; }
+.contact .eyebrow { color: rgba(255,255,255,.75); }
+.contact-copy p { color: rgba(255,255,255,.85); font-size: 19px; max-width: 28em; }
+.mailrow { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.mailrow a { font-family: var(--display); font-size: clamp(24px, 2.6vw, 32px); color: #fff; text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; user-select: all; overflow-wrap: anywhere; }
+.copy { font: 500 13px/1 var(--label); color: #fff; background: transparent; border: 1px solid rgba(255,255,255,.55); border-radius: 999px; padding: 9px 14px; cursor: pointer; }
+.copy:hover { background: rgba(255,255,255,.12); }
+form { grid-column: 8 / span 5; display: grid; gap: 16px; align-content: start; }
+.field { display: grid; gap: 6px; }
+.field label { font-family: var(--label); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: rgba(255,255,255,.8); }
+.field input, .field select, .field textarea { font: 400 16px/1.4 var(--body); color: #fff; background: rgba(255,255,255,.08); border: 1px solid rgba(255,255,255,.35); border-radius: 10px; padding: 13px 14px; width: 100%; min-width: 0; }
+.field select option { color: var(--ink); }
+.field input::placeholder, .field textarea::placeholder { color: rgba(255,255,255,.55); }
+.field textarea { min-height: 110px; resize: vertical; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible, .contact .btn:focus-visible, .copy:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
+.contact .btn { background: #fff; color: var(--blue); border-color: #fff; justify-self: start; }
+.contact .btn:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+.form-msg { font-size: 15px; color: #fff; min-height: 1.4em; }
+.two { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 900px) { .contact-copy, form { grid-column: 1 / -1; } }
+@media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
+
+/* Footer */
+footer { padding-block: 48px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 16px 32px; }
+footer p, footer a { font-size: 14px; color: var(--ink-2); text-decoration: none; }
+footer a:hover { color: var(--ink); }
+footer nav { display: block; }
+footer ul { display: flex; flex-wrap: wrap; gap: 22px; list-style: none; margin: 0; padding: 0; }
+.big-mark { width: 100%; font-family: var(--display); font-weight: 300; font-size: clamp(64px, 17vw, 240px); line-height: .85; letter-spacing: -0.04em; color: var(--ink); margin-bottom: 24px; overflow-wrap: anywhere; }
+.big-mark i { color: var(--blue); }
 </style>
 </head>
 <body>
 
-<div class="wrap">
-  <header>
-    <div>
-      <h1>Vinod Lead Manager</h1>
-      <p class="sub">Track outbound leads from first touch to meeting. Saved in this browser.</p>
-    </div>
-    <div class="tools">
-      <label class="btn ghost" for="importFile">Import CSV</label>
-      <input type="file" id="importFile" accept=".csv,text/csv" class="sr">
-      <button class="ghost" id="copyCsv" type="button">Copy CSV</button>
-      <button class="ghost" id="downloadCsv" type="button">Download CSV</button>
-    </div>
-  </header>
-
-  <div class="pipe" id="pipe" role="group" aria-label="Filter by stage"></div>
-
-  <form id="leadForm" autocomplete="off">
-    <div class="f c2"><label for="fCompany">Company *</label><input id="fCompany" placeholder="Acme Ltd"></div>
-    <div class="f c2"><label for="fContact">Contact</label><input id="fContact" placeholder="Jane Smith"></div>
-    <div class="f c2"><label for="fTitle">Title</label><input id="fTitle" placeholder="Head of IT"></div>
-    <div class="f c2 wide"><label for="fEmail">Email</label><input id="fEmail" type="email" placeholder="jane@acme.com"></div>
-    <div class="f c2"><label for="fStatus">Stage</label><select id="fStatus"></select></div>
-    <div class="f c2"><label for="fFollow">Follow-up</label><input id="fFollow" type="date"></div>
-    <div class="f c6"><label for="fNotes">Notes</label><textarea id="fNotes" rows="1" placeholder="Signal, last touch, next step"></textarea></div>
-    <div class="formfoot">
-      <button class="primary" type="submit" id="saveBtn">Add Lead</button>
-      <button class="ghost" type="button" id="cancelEdit" hidden>Cancel edit</button>
-      <span class="msg" id="msg" aria-live="polite"></span>
-    </div>
-  </form>
-
-  <div class="filters">
-    <input id="search" type="search" placeholder="Search company, contact, email, notes">
-    <select id="sort" aria-label="Sort">
-      <option value="follow">Sort: follow-up date</option>
-      <option value="recent">Sort: newest first</option>
-      <option value="company">Sort: company A to Z</option>
-    </select>
-    <span class="count" id="count"></span>
+<header class="top" id="top">
+  <div class="wrap">
+    <a class="mark" href="#home" aria-label="3marketeer home"><i>3</i>marketeer</a>
+    <nav aria-label="Main">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#outbound">Outbound</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#work-with-us">Engagements</a></li>
+        <li><a href="#faq">FAQ</a></li>
+      </ul>
+    </nav>
+    <a class="btn btn-solid" href="#contact"><span class="long">Book a strategy call</span><span class="arr">&rarr;</span></a>
   </div>
+</header>
 
-  <ul id="leadList"></ul>
-  <p class="hint">CSV columns: company, contact, title, email, status, followUp (YYYY-MM-DD), notes. Apollo exports work too: Company, First Name, Last Name, Title and Email are picked up automatically.</p>
-</div>
+<main id="home">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="three" aria-hidden="true">3</div>
+    <div class="wrap">
+      <div class="hero-copy">
+        <span class="eyebrow">Full-service B2B marketing studio</span>
+        <h1 id="hero-title"><span class="ln">Strategy.</span><span class="ln">Creative.</span><span class="ln"><em>Systems.</em></span></h1>
+        <p class="lede"><strong>Three disciplines, one team.</strong> We plan the market, make the brand people remember, and build the outbound and automation engine that turns attention into booked meetings.</p>
+        <div class="hero-cta">
+          <a class="btn btn-solid" href="#contact">Book a strategy call <span class="arr">&rarr;</span></a>
+          <a class="btn btn-line" href="#services">See all services</a>
+        </div>
+      </div>
+      <div class="pillars-tag">
+        <ul>
+          <li><span>I</span><span>Positioning, GTM, research</span></li>
+          <li><span>II</span><span>Brand, web, content, ads</span></li>
+          <li><span>III</span><span>Outbound, automation, data</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="services" aria-labelledby="svc-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Services</span>
+        <h2 id="svc-title">Everything your marketing needs, <em>from first idea to closed pipeline.</em></h2>
+        <p>Hire us for one service or the whole stack. Every engagement starts with strategy, so the creative and the systems point the same way.</p>
+      </div>
+
+      <div class="services">
+        <div class="pillar">
+          <div class="pillar-head">
+            <span class="pillar-num">I</span>
+            <h3>Strategy</h3>
+            <p>Decide who to sell to, what to say and where to show up, before a single pound or rupee goes into execution.</p>
+          </div>
+          <ul class="svc-list">
+            <li><details class="svc"><summary><span class="svc-name">Go-to-market strategy</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>A launch or expansion plan for a new market, product or segment, with channels, budget split and 90-day targets.</p><ul class="deliv"><li>GTM plan</li><li>Channel mix</li><li>90-day roadmap</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">ICP and positioning</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Pin down the accounts and buyers worth chasing, then the one sentence that makes them care.</p><ul class="deliv"><li>ICP scorecard</li><li>Buyer personas</li><li>Positioning statement</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Messaging and copy framework</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Pains, proof and offers mapped per persona, so sales, web and ads all say the same thing.</p><ul class="deliv"><li>Messaging house</li><li>Objection bank</li><li>Value props by persona</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Market and competitor research</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Who else is selling to your buyers, how they price, and the gaps you can own.</p><ul class="deliv"><li>Competitor teardown</li><li>Pricing map</li><li>Opportunity brief</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Fractional CMO</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Senior marketing leadership a few days a month: planning, hiring, agency management and board reporting.</p><ul class="deliv"><li>Quarterly plan</li><li>KPI dashboard</li><li>Team and vendor oversight</li></ul></div></details></li>
+          </ul>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-head">
+            <span class="pillar-num">II</span>
+            <h3>Creative</h3>
+            <p>The brand, site and content that make a cold prospect take the meeting, and a warm one sign.</p>
+          </div>
+          <ul class="svc-list">
+            <li><details class="svc"><summary><span class="svc-name">Brand identity</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Logo, type, colour and voice, packaged into guidelines your team can actually follow.</p><ul class="deliv"><li>Logo suite</li><li>Brand guidelines</li><li>Tone of voice</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Website design and development</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Fast, conversion-led websites and landing pages on Webflow, WordPress or custom code.</p><ul class="deliv"><li>UX and wireframes</li><li>Design system</li><li>Build and launch</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Content and SEO</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Search-led articles, case studies and pillar pages that rank and get shared by your buyers.</p><ul class="deliv"><li>Keyword strategy</li><li>Monthly content</li><li>Technical SEO audit</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Social media and LinkedIn</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Founder and company pages that build authority, with a posting system that doesn't depend on inspiration.</p><ul class="deliv"><li>Content calendar</li><li>Founder ghostwriting</li><li>Carousels and visuals</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Paid ads and creative</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Campaigns on Google, LinkedIn and Meta, with ad creative tested every week, not every quarter.</p><ul class="deliv"><li>Campaign setup</li><li>Ad creative</li><li>Weekly optimisation</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Sales collateral and video</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Pitch decks, one-pagers, case studies and short explainer videos your sales team will use.</p><ul class="deliv"><li>Pitch deck</li><li>Case studies</li><li>Explainer video</li></ul></div></details></li>
+          </ul>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-head">
+            <span class="pillar-num">III</span>
+            <h3>Systems</h3>
+            <p>The engine room: outbound, automation and data that keep meetings landing in the calendar every week.</p>
+          </div>
+          <ul class="svc-list">
+            <li><details class="svc" open><summary><span class="svc-name">Cold email outbound</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Done-for-you campaigns: domains, mailboxes, warm-up, lists, copy and reply handling, run at scale without burning your main domain.</p><ul class="deliv"><li>Sending infrastructure</li><li>Sequences and copy</li><li>Reply management</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">LinkedIn outreach</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Connection and message campaigns that run alongside email, so prospects see you in two places.</p><ul class="deliv"><li>Profile optimisation</li><li>Multi-account campaigns</li><li>Inbox handling</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Lead data and enrichment</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Verified contact lists built around buying signals: hiring, funding, tech changes and leadership moves.</p><ul class="deliv"><li>Signal-based lists</li><li>Email verification</li><li>Waterfall enrichment</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Marketing automation</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Workflows in n8n, Make and HubSpot that move leads, score them and alert sales without manual copy-paste.</p><ul class="deliv"><li>Lead routing</li><li>Scoring</li><li>AI-assisted workflows</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">CRM setup and RevOps</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>A clean CRM with pipelines, stages and reports that match how you actually sell.</p><ul class="deliv"><li>HubSpot setup</li><li>Pipeline design</li><li>Data clean-up</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Email deliverability</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>Audits and fixes for SPF, DKIM, DMARC, blocklists and inbox placement, for cold and marketing email alike.</p><ul class="deliv"><li>DNS audit</li><li>Inbox placement tests</li><li>Recovery plan</li></ul></div></details></li>
+            <li><details class="svc"><summary><span class="svc-name">Analytics and attribution</span><span class="svc-plus" aria-hidden="true">+</span></summary><div class="svc-body"><p>GA4, tag management and dashboards that show which channel actually created the pipeline.</p><ul class="deliv"><li>GA4 and GTM setup</li><li>Attribution model</li><li>Live dashboard</li></ul></div></details></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band sec" id="outbound" aria-labelledby="ob-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Outbound, engineered</span>
+        <h2 id="ob-title">Cold email that lands in the <em>inbox,</em> not the spam folder.</h2>
+        <p>Most outbound fails before anyone reads a word. We build the sending layer properly, then write copy worth opening.</p>
+      </div>
+      <div class="spec-grid">
+        <div class="spec-notes">
+          <div class="note"><h3>Separate sending domains</h3><p>Campaigns run on look-alike domains, so your main domain and team inboxes stay protected.</p></div>
+          <div class="note"><h3>Authenticated and warmed</h3><p>Every mailbox gets SPF, DKIM and DMARC, plus a warm-up period before the first real email goes out.</p></div>
+          <div class="note"><h3>Low volume per mailbox</h3><p>Volume is spread across many mailboxes at a safe daily cap, which keeps reputation healthy as you scale.</p></div>
+          <div class="note"><h3>Signal-led copy</h3><p>Each email references a real reason to reach out today: a hire, a funding round, a new tool, a new market.</p></div>
+        </div>
+        <div class="spec" aria-label="Example sending domain setup">
+          <div class="spec-top"><span>Sending domain spec</span><b>get-acme.com</b></div>
+          <div class="spec-rows">
+            <table>
+              <tbody>
+                <tr><td>SPF</td><td><span class="ok">&#10003;</span> v=spf1 include:_spf.google.com ~all</td></tr>
+                <tr><td>DKIM</td><td><span class="ok">&#10003;</span> 2048-bit key, selector google</td></tr>
+                <tr><td>DMARC</td><td><span class="ok">&#10003;</span> p=quarantine; rua reports on</td></tr>
+                <tr><td>Redirect</td><td><span class="ok">&#10003;</span> 301 to acme.com</td></tr>
+                <tr><td>Mailboxes</td><td><span class="val">3</span> per domain</td></tr>
+                <tr><td>Warm-up</td><td><span class="val">14 to 21</span> days before launch</td></tr>
+                <tr><td>Daily cap</td><td><span class="val">30</span> emails per mailbox</td></tr>
+                <tr><td>Tracking</td><td>Custom tracking domain, opens off by default</td></tr>
+                <tr><td>Monitoring</td><td>Blocklists and inbox placement, weekly</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="spec-foot">Example configuration. Final settings depend on your volume and provider.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="process" aria-labelledby="proc-title">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Process</span>
+        <h2 id="proc-title">From first call to first meetings in <em>about a month.</em></h2>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-meta"><b>01</b><span>Week 1</span></div><h3>Diagnose</h3><p>We audit your positioning, funnel, tools and data, and agree the numbers that matter.</p></div>
+        <div class="step"><div class="step-meta"><b>02</b><span>Week 2</span></div><h3>Design</h3><p>ICP, messaging, channel plan and creative direction, signed off before anything is built.</p></div>
+        <div class="step"><div class="step-meta"><b>03</b><span>Weeks 3 to 4</span></div><h3>Launch</h3><p>Infrastructure, campaigns, pages and automations go live, with tracking from day one.</p></div>
+        <div class="step"><div class="step-meta"><b>04</b><span>Monthly</span></div><h3>Compound</h3><p>Weekly tests, monthly reviews. What works gets more budget; what doesn't gets cut.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="work-with-us" aria-labelledby="eng-title" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Engagements</span>
+        <h2 id="eng-title">Three ways to <em>work with us.</em></h2>
+        <p>Start small, prove it works, then scale. No long lock-ins.</p>
+      </div>
+      <div class="models">
+        <article class="model">
+          <span class="model-kind">Project</span>
+          <h3>Sprint</h3>
+          <p class="model-sub">A fixed-scope project with a clear finish line.</p>
+          <ul><li>Brand identity or website build</li><li>GTM or positioning workshop</li><li>Deliverability audit and fix</li><li>CRM or automation setup</li></ul>
+          <a class="btn btn-line" href="#contact">Scope a sprint <span class="arr">&rarr;</span></a>
+        </article>
+        <article class="model feature">
+          <span class="model-kind">Most chosen</span>
+          <h3>Growth retainer</h3>
+          <p class="model-sub">An ongoing team running your pipeline engine every month.</p>
+          <ul><li>Cold email and LinkedIn outbound</li><li>Lead data, enrichment and lists</li><li>Paid ads and landing pages</li><li>Monthly reporting and strategy call</li></ul>
+          <a class="btn" href="#contact">Start a retainer <span class="arr">&rarr;</span></a>
+        </article>
+        <article class="model">
+          <span class="model-kind">Leadership</span>
+          <h3>Fractional CMO</h3>
+          <p class="model-sub">Senior marketing leadership without a full-time hire.</p>
+          <ul><li>Quarterly plan and budget</li><li>Team, agency and vendor management</li><li>KPI dashboard and board reporting</li><li>Hands-on support from all three pillars</li></ul>
+          <a class="btn btn-line" href="#contact">Talk to us <span class="arr">&rarr;</span></a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" aria-labelledby="stack-title" style="padding-top:0">
+    <div class="wrap stack">
+      <div style="grid-column:1/-1" class="sec-head">
+        <span class="eyebrow">Stack</span>
+        <h2 id="stack-title">Tools we <em>run every day.</em></h2>
+      </div>
+      <div class="stack-groups">
+        <div><h4>Data</h4><p>Clay, Apollo, Apify</p></div>
+        <div><h4>Outreach</h4><p>Saleshandy, HeyReach, Expandi</p></div>
+        <div><h4>Automation</h4><p>n8n, Make, HubSpot</p></div>
+        <div><h4>Ads</h4><p>Google, LinkedIn, Meta</p></div>
+        <div><h4>Analytics</h4><p>GA4, Google Tag Manager, Looker Studio</p></div>
+        <div><h4>Web</h4><p>Webflow, WordPress, custom code</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec" id="faq" aria-labelledby="faq-title" style="padding-top:0">
+    <div class="wrap faq">
+      <div style="grid-column:1/-1" class="sec-head">
+        <span class="eyebrow">FAQ</span>
+        <h2 id="faq-title">Questions we <em>get asked.</em></h2>
+      </div>
+      <div class="faq-list">
+        <details><summary>Do you only work with B2B companies?</summary><p>Mostly, yes. Our outbound and automation work is built for B2B sales cycles. Brand, web and content work suits B2C brands too.</p></details>
+        <details><summary>Will cold email hurt my company's domain?</summary><p>No. We send from separate domains set up just for outreach, so your main domain and day-to-day email are never at risk.</p></details>
+        <details><summary>Can we start with just one service?</summary><p>Yes. Many clients start with a single sprint, like a deliverability fix or a website, and add more once they see results.</p></details>
+        <details><summary>Do you use our tools or yours?</summary><p>Either. We happily work inside your existing CRM and accounts, or set up and own the stack for you.</p></details>
+        <details><summary>How quickly will we see results?</summary><p>Outbound campaigns usually go live within three to four weeks, after domains are warmed. SEO and brand work take longer to compound.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="contact-copy">
+        <span class="eyebrow">Start a project</span>
+        <h2 id="contact-title">Let's build your <em>pipeline.</em></h2>
+        <p>Tell us where you are and where you want to be. We reply within one working day with honest next steps, even if that means we're not the right fit.</p>
+        <div class="mailrow">
+          <a href="mailto:hello@3marketeer.com" id="mailLink">hello@3marketeer.com</a>
+          <button class="copy" type="button" id="copyMail">Copy</button>
+        </div>
+      </div>
+      <form id="brief" novalidate>
+        <div class="two">
+          <div class="field"><label for="bName">Name</label><input id="bName" name="name" autocomplete="name" placeholder="Your name"></div>
+          <div class="field"><label for="bCompany">Company</label><input id="bCompany" name="company" autocomplete="organization" placeholder="Company"></div>
+        </div>
+        <div class="field"><label for="bEmail">Work email</label><input id="bEmail" name="email" type="email" autocomplete="email" placeholder="you@company.com"></div>
+        <div class="field"><label for="bNeed">What do you need?</label>
+          <select id="bNeed" name="need">
+            <option>Outbound and lead generation</option>
+            <option>Brand and website</option>
+            <option>Content, SEO and social</option>
+            <option>Paid ads</option>
+            <option>Automation, CRM and data</option>
+            <option>Strategy or fractional CMO</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field"><label for="bMsg">Project details</label><textarea id="bMsg" name="message" placeholder="Goals, timeline, budget range"></textarea></div>
+        <button class="btn" type="submit">Send brief <span class="arr">&rarr;</span></button>
+        <p class="form-msg" id="formMsg" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="big-mark" aria-hidden="true"><i>3</i>marketeer</div>
+    <p>&copy; <span id="yr">2026</span> 3marketeer. Strategy, creative and systems for B2B growth.</p>
+    <nav aria-label="Footer">
+      <ul>
+        <li><a href="#services">Services</a></li>
+        <li><a href="#process">Process</a></li>
+        <li><a href="#work-with-us">Engagements</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </div>
+</footer>
 
 <script>
 (function () {
-  const KEY = "leads";
-  const STAGES = ["New", "Contacted", "Replied", "Meeting", "Won", "Lost"];
-  const COLOR = { New: "--s-new", Contacted: "--s-contacted", Replied: "--s-replied", Meeting: "--s-meeting", Won: "--s-won", Lost: "--s-lost" };
-  const $ = id => document.getElementById(id);
-  const todayISO = () => { const d = new Date(); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
-  const addDays = n => { const d = new Date(); d.setDate(d.getDate() + n); d.setMinutes(d.getMinutes() - d.getTimezoneOffset()); return d.toISOString().slice(0, 10); };
-  const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+  var EMAIL = "hello@3marketeer.com";
+  document.getElementById("yr").textContent = new Date().getFullYear();
 
-  function examples() {
-    return [
-      { company: "Northbeam Logistics", contact: "Priya Nair", title: "IT Director", email: "priya@northbeam.example", status: "Contacted", followUp: addDays(-1), notes: "Opened email twice. Bump with case study.", example: true },
-      { company: "Halden Health Group", contact: "Tom Reeve", title: "Head of HR Systems", email: "tom.reeve@halden.example", status: "Replied", followUp: todayISO(), notes: "Asked for Workday pricing. Send deck.", example: true },
-      { company: "Corvel Retail UK", contact: "Amara Okafor", title: "CIO", email: "amara@corvel.example", status: "New", followUp: addDays(3), notes: "Hiring 4 ServiceNow roles on LinkedIn.", example: true }
-    ].map(l => ({ id: uid(), created: Date.now(), ...l }));
-  }
+  var top = document.getElementById("top");
+  function onScroll() { top.classList.toggle("scrolled", window.scrollY > 8); }
+  window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
-  function normalize(l) {
-    if (typeof l === "string") l = { company: l };
-    return {
-      id: l.id || uid(), created: l.created || Date.now(),
-      company: String(l.company || "").trim(), contact: l.contact || "", title: l.title || "",
-      email: l.email || "", status: STAGES.includes(l.status) ? l.status : "New",
-      followUp: /^\d{4}-\d{2}-\d{2}$/.test(l.followUp || "") ? l.followUp : "", notes: l.notes || "",
-      example: !!l.example
-    };
-  }
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (raw === null) return examples();
-      return JSON.parse(raw).map(normalize).filter(l => l.company);
-    } catch (e) { return examples(); }
-  }
-  function save() { try { localStorage.setItem(KEY, JSON.stringify(leads)); } catch (e) {} }
-
-  let leads = load();
-  let stageFilter = "All";
-  let editingId = null;
-
-  STAGES.forEach(s => { const o = document.createElement("option"); o.value = o.textContent = s; $("fStatus").append(o); });
-
-  function msg(text, kind) { const m = $("msg"); m.textContent = text || ""; m.className = "msg" + (kind ? " " + kind : ""); }
-
-  function dueState(l) {
-    if (!l.followUp || l.status === "Won" || l.status === "Lost") return "";
-    const t = todayISO();
-    return l.followUp < t ? "over" : l.followUp === t ? "today" : "";
-  }
-
-  function renderPipe() {
-    const pipe = $("pipe"); pipe.replaceChildren();
-    const due = leads.filter(l => dueState(l)).length;
-    const cells = [["All", leads.length, null], ...STAGES.map(s => [s, leads.filter(l => l.status === s).length, COLOR[s]]), ["Due", due, "--warn"]];
-    cells.forEach(([label, n, c]) => {
-      const b = document.createElement("button"); b.type = "button";
-      if (c) b.style.setProperty("--c", `var(${c})`);
-      if (label === "Due") b.className = "due";
-      b.setAttribute("aria-pressed", String(stageFilter === label));
-      const nn = document.createElement("span"); nn.className = "n"; nn.textContent = n;
-      const ll = document.createElement("span"); ll.className = "l"; ll.textContent = label === "Due" ? "Due now" : label;
-      b.append(nn, ll);
-      b.addEventListener("click", () => { stageFilter = stageFilter === label ? "All" : label; render(); });
-      pipe.append(b);
-    });
-  }
-
-  function fmtDate(iso) {
-    if (!iso) return "";
-    const [y, m, d] = iso.split("-").map(Number);
-    return new Date(y, m - 1, d).toLocaleDateString(undefined, { day: "numeric", month: "short" });
-  }
-
-  function visible() {
-    const q = $("search").value.trim().toLowerCase();
-    let out = leads.filter(l => {
-      if (stageFilter === "Due" && !dueState(l)) return false;
-      if (stageFilter !== "All" && stageFilter !== "Due" && l.status !== stageFilter) return false;
-      if (!q) return true;
-      return [l.company, l.contact, l.title, l.email, l.notes].join(" ").toLowerCase().includes(q);
-    });
-    const sort = $("sort").value;
-    if (sort === "company") out.sort((a, b) => a.company.localeCompare(b.company));
-    else if (sort === "recent") out.sort((a, b) => b.created - a.created);
-    else out.sort((a, b) => (a.followUp || "9999") .localeCompare(b.followUp || "9999") || b.created - a.created);
-    return out;
-  }
-
-  function render() {
-    renderPipe();
-    const list = $("leadList"); list.replaceChildren();
-    const rows = visible();
-    $("count").textContent = rows.length === leads.length ? `${leads.length} leads` : `${rows.length} of ${leads.length} leads`;
-    if (!rows.length) {
-      const li = document.createElement("li"); li.className = "empty";
-      li.textContent = leads.length ? "No leads match this filter." : "No leads yet. Add your first company above or import a CSV.";
-      list.append(li); return;
+  var copyBtn = document.getElementById("copyMail");
+  copyBtn.addEventListener("click", function () {
+    function done() { copyBtn.textContent = "Copied"; setTimeout(function () { copyBtn.textContent = "Copy"; }, 1800); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById("mailLink"));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = "Press Ctrl+C";
     }
-    rows.forEach(l => {
-      const li = document.createElement("li"); li.className = "lead";
-      li.style.setProperty("--c", `var(${COLOR[l.status]})`);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(EMAIL).then(done, fallback);
+    else fallback();
+  });
 
-      const main = document.createElement("div"); main.style.minWidth = "0";
-      const co = document.createElement("div"); co.className = "co"; co.textContent = l.company;
-      if (l.example) { const t = document.createElement("span"); t.className = "tag"; t.textContent = "example"; co.append(t); }
-      main.append(co);
-      if (l.notes) { const n = document.createElement("div"); n.className = "note"; n.textContent = l.notes; main.append(n); }
-
-      const contact = document.createElement("div"); contact.className = "contact"; contact.style.minWidth = "0";
-      if (l.contact || l.title) { const w = document.createElement("div"); w.className = "who"; w.textContent = [l.contact, l.title].filter(Boolean).join(", "); contact.append(w); }
-      if (l.email) { const e = document.createElement("div"); e.className = "email"; e.textContent = l.email; contact.append(e); }
-
-      const sel = document.createElement("select"); sel.setAttribute("aria-label", "Stage for " + l.company);
-      STAGES.forEach(s => { const o = document.createElement("option"); o.value = o.textContent = s; if (s === l.status) o.selected = true; sel.append(o); });
-      sel.addEventListener("change", () => { l.status = sel.value; save(); render(); });
-
-      const fu = document.createElement("div"); const ds = dueState(l);
-      fu.className = "fu" + (ds ? " " + ds : "");
-      fu.textContent = l.followUp ? fmtDate(l.followUp) : "No follow-up";
-      if (ds) { const s = document.createElement("small"); s.textContent = ds === "over" ? "Overdue" : "Today"; fu.append(s); }
-
-      const acts = document.createElement("div"); acts.className = "acts";
-      const ed = document.createElement("button"); ed.type = "button"; ed.textContent = "Edit";
-      ed.addEventListener("click", () => startEdit(l.id));
-      const del = document.createElement("button"); del.type = "button"; del.className = "del"; del.textContent = "Delete";
-      let armed = false;
-      del.addEventListener("click", () => {
-        if (!armed) { armed = true; del.classList.add("arm"); del.textContent = "Confirm"; setTimeout(() => { armed = false; del.classList.remove("arm"); del.textContent = "Delete"; }, 3000); return; }
-        leads = leads.filter(x => x.id !== l.id); save();
-        if (editingId === l.id) resetForm();
-        render(); msg(`Deleted ${l.company}.`);
-      });
-      acts.append(ed, del);
-
-      li.append(main, contact, sel, fu, acts);
-      list.append(li);
-    });
-  }
-
-  const F = { company: "fCompany", contact: "fContact", title: "fTitle", email: "fEmail", status: "fStatus", followUp: "fFollow", notes: "fNotes" };
-  function resetForm() {
-    editingId = null; $("leadForm").reset(); $("fStatus").value = "New";
-    $("saveBtn").textContent = "Add Lead"; $("cancelEdit").hidden = true;
-  }
-  function startEdit(id) {
-    const l = leads.find(x => x.id === id); if (!l) return;
-    editingId = id; Object.entries(F).forEach(([k, el]) => { $(el).value = l[k] || ""; });
-    $("saveBtn").textContent = "Save changes"; $("cancelEdit").hidden = false; msg(`Editing ${l.company}.`);
-    $("fCompany").focus(); window.scrollTo({ top: $("leadForm").offsetTop - 16, behavior: "smooth" });
-  }
-  $("cancelEdit").addEventListener("click", () => { resetForm(); msg(""); });
-
-  $("leadForm").addEventListener("submit", e => {
+  var form = document.getElementById("brief"), msg = document.getElementById("formMsg");
+  form.addEventListener("submit", function (e) {
     e.preventDefault();
-    const data = {}; Object.entries(F).forEach(([k, el]) => { data[k] = $(el).value.trim(); });
-    if (!data.company) { msg("Enter a company name to save the lead.", "err"); $("fCompany").focus(); return; }
-    if (data.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) { msg("That email looks incomplete. Check it or leave it blank.", "err"); $("fEmail").focus(); return; }
-    const dupe = leads.find(l => l.id !== editingId && ((data.email && l.email.toLowerCase() === data.email.toLowerCase()) || l.company.toLowerCase() === data.company.toLowerCase()));
-    if (editingId) {
-      const l = leads.find(x => x.id === editingId);
-      Object.assign(l, normalize({ ...l, ...data, example: false }));
-      msg(`Saved ${data.company}.`);
-    } else {
-      leads.push(normalize({ ...data, created: Date.now() }));
-      msg(dupe ? `Added ${data.company}. Note: ${dupe.company} is already in your list.` : `Added ${data.company}.`, dupe ? "warn" : "");
-    }
-    save(); resetForm(); render();
+    var v = function (id) { return document.getElementById(id).value.trim(); };
+    var email = v("bEmail");
+    if (!v("bName")) { msg.textContent = "Add your name so we know who to reply to."; document.getElementById("bName").focus(); return; }
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { msg.textContent = "Add a valid work email so we can reply."; document.getElementById("bEmail").focus(); return; }
+    var subject = "Project brief: " + v("bNeed") + (v("bCompany") ? " for " + v("bCompany") : "");
+    var body = "Name: " + v("bName") + "\nCompany: " + v("bCompany") + "\nEmail: " + email + "\nNeed: " + v("bNeed") + "\n\n" + v("bMsg");
+    window.location.href = "mailto:" + EMAIL + "?subject=" + encodeURIComponent(subject) + "&body=" + encodeURIComponent(body);
+    msg.textContent = "Your email app should open with the brief filled in. If it didn't, email " + EMAIL + " directly.";
   });
-
-  $("search").addEventListener("input", render);
-  $("sort").addEventListener("change", render);
-
-  /* CSV */
-  const COLS = ["company", "contact", "title", "email", "status", "followUp", "notes"];
-  const esc = v => { v = String(v ?? ""); return /[",\n\r]/.test(v) ? '"' + v.replace(/"/g, '""') + '"' : v; };
-  const toCsv = () => [COLS.join(","), ...leads.map(l => COLS.map(c => esc(l[c])).join(","))].join("\n");
-
-  $("copyCsv").addEventListener("click", () => {
-    const csv = toCsv();
-    const done = () => msg(`Copied ${leads.length} leads as CSV. Paste into Google Sheets.`);
-    if (navigator.clipboard && navigator.clipboard.writeText) {
-      navigator.clipboard.writeText(csv).then(done).catch(() => fallbackCopy(csv, done));
-    } else fallbackCopy(csv, done);
-  });
-  function fallbackCopy(text, done) {
-    const ta = document.createElement("textarea"); ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
-    document.body.append(ta); ta.select();
-    try { document.execCommand("copy") ? done() : msg("Copy was blocked here. Use Download CSV instead.", "err"); }
-    catch (e) { msg("Copy was blocked here. Use Download CSV instead.", "err"); }
-    ta.remove();
-  }
-  $("downloadCsv").addEventListener("click", () => {
-    const blob = new Blob([toCsv()], { type: "text/csv" });
-    const a = document.createElement("a"); a.href = URL.createObjectURL(blob); a.download = `leads-${todayISO()}.csv`;
-    document.body.append(a); a.click(); a.remove();
-    msg("If no file downloaded, this viewer blocks downloads. Use Copy CSV, or open the page from GitHub.");
-  });
-
-  function parseCsv(text) {
-    const rows = []; let row = [], cur = "", q = false;
-    for (let i = 0; i < text.length; i++) {
-      const ch = text[i];
-      if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; }
-      else if (ch === '"') q = true;
-      else if (ch === ",") { row.push(cur); cur = ""; }
-      else if (ch === "\n" || ch === "\r") { if (ch === "\r" && text[i + 1] === "\n") i++; row.push(cur); rows.push(row); row = []; cur = ""; }
-      else cur += ch;
-    }
-    if (cur || row.length) { row.push(cur); rows.push(row); }
-    return rows.filter(r => r.some(c => c.trim()));
-  }
-  $("importFile").addEventListener("change", e => {
-    const file = e.target.files[0]; if (!file) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const rows = parseCsv(String(reader.result).replace(/^﻿/, ""));
-      if (rows.length < 2) { msg("That file has no lead rows. It needs a header row plus at least one lead.", "err"); return; }
-      const head = rows[0].map(h => h.trim().toLowerCase().replace(/[^a-z]/g, ""));
-      const idx = names => head.findIndex(h => names.includes(h));
-      const map = {
-        company: idx(["company", "companyname", "account", "accountname", "organization"]),
-        contact: idx(["contact", "name", "fullname"]), first: idx(["firstname"]), last: idx(["lastname"]),
-        title: idx(["title", "jobtitle"]), email: idx(["email", "emailaddress", "workemail"]),
-        status: idx(["status", "stage"]), followUp: idx(["followup", "followupdate", "nextstep"]), notes: idx(["notes", "note"])
-      };
-      if (map.company < 0) { msg("No company column found. Add a header named company.", "err"); return; }
-      const have = new Set(leads.map(l => (l.email || l.company).toLowerCase()));
-      let added = 0, skipped = 0;
-      rows.slice(1).forEach(r => {
-        const g = k => map[k] >= 0 ? (r[map[k]] || "").trim() : "";
-        const contact = g("contact") || [g("first"), g("last")].filter(Boolean).join(" ");
-        const l = normalize({ company: g("company"), contact, title: g("title"), email: g("email"), status: g("status"), followUp: g("followUp"), notes: g("notes") });
-        if (!l.company) return;
-        const key = (l.email || l.company).toLowerCase();
-        if (have.has(key)) { skipped++; return; }
-        have.add(key); leads.push(l); added++;
-      });
-      save(); render();
-      msg(`Imported ${added} leads${skipped ? `, skipped ${skipped} duplicates` : ""}.`);
-      e.target.value = "";
-    };
-    reader.readAsText(file);
-  });
-
-  resetForm();
-  render();
 })();
 </script>
 </body>
